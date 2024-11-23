@@ -6,6 +6,7 @@ const Navbar = ({ setCurrentTab }) => {
       <button onClick={() => setCurrentTab("Chatbot")}>Chatbot</button>
       <button onClick={() => setCurrentTab("Compose")}>Compose</button>
       <button onClick={() => setCurrentTab("Rewrite")}>Rewrite</button>
+      <div id="indicator"></div>
     </div>
   );
 };
