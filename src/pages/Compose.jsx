@@ -2,6 +2,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import "./Compose.css";
 import Loading from "../components/Loading";
+import { z } from "zod";
 
 const Compose = () => {
   const [response, setResponse] = useState("");
@@ -10,8 +11,20 @@ const Compose = () => {
   const [lengthInput, setLengthInput] = useState("One Liner");
   const [isGenerated, setIsGenerated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const inputSchema = z
+    .string()
+    .min(3, "Input must be at least 3 characters long");
 
   const composeEmail = async () => {
+    try {
+      inputSchema.parse(subjectInput);
+      setError(""); // Clear any previous errors
+    } catch (e) {
+      setError(e.errors[0].message);
+      return; // Prevent form submission
+    }
+
     setIsLoading(true);
     let s = await ai.languageModel.create({
       systemPrompt:
@@ -53,9 +66,11 @@ const Compose = () => {
                 id="subject-input"
                 className="input-field"
                 type="text"
-                placeholder="e.g., 'Follow-up Request'"
+                placeholder={"e.g., 'Follow-up Request'"}
+                value={subjectInput}
                 onChange={(e) => setSubjectInput(e.target.value)}
               />
+              {error && <p className="error-message">{error}</p>}
             </div>
 
             <div className="input-box">
@@ -94,7 +109,9 @@ const Compose = () => {
             </button>
           </div>
         ) : isLoading ? (
-          <Loading />
+          <div className="popup-container">
+            <Loading />
+          </div>
         ) : (
           <>
             <div className="response-box">

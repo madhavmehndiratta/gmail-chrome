@@ -151,3 +151,8 @@ html {
 .go-back-button:hover {
     background: #e03e3e;
 }
+
+.error-message {
+    font-size: 10px;
+    color: red;
+}
