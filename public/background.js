@@ -3,16 +3,20 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "autoGenerateReply",
     title: "Auto-generate reply",
-    contexts: ["page"],
-    documentUrlPatterns: ["https://mail.google.com/*"],
+    contexts: ["selection"],
+    // documentUrlPatterns: ["https://mail.google.com/*"],
   });
 });
 
-chrome.contextMenus.onClicked.addListener(() => {
-  chrome.windows.create({
-    url: chrome.runtime.getURL("index.html#/popup"),
-    type: "popup",
-    width: 400,
-    height: 500,
-  });
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "autoGenerateReply") {
+    chrome.storage.local.set({ selectedText: info.selectionText }, () => {
+      chrome.windows.create({
+        url: chrome.runtime.getURL("index.html#/reply"),
+        type: "popup",
+        width: 360,
+        height: 480,
+      });
+    });
+  }
 });

@@ -6,7 +6,7 @@ import Chatbot from "./pages/Chatbox";
 import Compose from "./pages/Compose";
 import Rewrite from "./pages/Rewrite";
 import Home from "./pages/Home";
-import Popup from "./pages/Popup";
+import Reply from "./pages/Reply";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
 function Main() {
@@ -38,7 +38,7 @@ function App() {
     <HashRouter>
       <Routes>
         <Route exact path="/" element={<Main />} />
-        <Route path="/popup" element={<Popup />} />
+        <Route path="/reply" element={<Reply />} />
       </Routes>
     </HashRouter>
   );
