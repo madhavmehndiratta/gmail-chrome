@@ -27,7 +27,7 @@ function Main() {
 
   return (
     <div className="page">
-      <Navbar setCurrentTab={setCurrentTab} />
+      <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <div style={{ marginTop: 10 }}>{renderComponent()}</div>
     </div>
   );
