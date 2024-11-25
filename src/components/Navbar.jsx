@@ -2,7 +2,7 @@ import "./Navbar.css";
 
 const Navbar = ({ currentTab, setCurrentTab }) => {
   return (
-    <div>
+    <div className="navBody navButton">
       <button
         className={currentTab === "Chatbot" ? "selected" : ""}
         onClick={() => setCurrentTab("Chatbot")}
