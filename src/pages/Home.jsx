@@ -1,5 +1,8 @@
+import "./Home.css";
 const Home = () => {
-  return <>Home Page Component</>;
+   return (<div>
+    <img src="/images/mimo.png"></img>
+  </div>)
 };
 
 export default Home;

@@ -27,3 +27,4 @@ const Navbar = ({ currentTab, setCurrentTab }) => {
 };
 
 export default Navbar;
+    
