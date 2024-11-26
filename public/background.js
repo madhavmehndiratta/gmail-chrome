@@ -14,8 +14,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       chrome.windows.create({
         url: chrome.runtime.getURL("index.html#/reply"),
         type: "popup",
-        width: 360,
-        height: 480,
+        width: 380,
+        height: 512,
       });
     });
   }
