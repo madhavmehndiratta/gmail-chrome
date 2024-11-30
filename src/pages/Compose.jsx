@@ -19,10 +19,10 @@ const Compose = () => {
   const composeEmail = async () => {
     try {
       inputSchema.parse(subjectInput);
-      setError(""); // Clear any previous errors
+      setError("");
     } catch (e) {
       setError(e.errors[0].message);
-      return; // Prevent form submission
+      return;
     }
 
     setIsLoading(true);

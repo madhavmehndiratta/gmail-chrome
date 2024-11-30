@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -14,7 +15,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       chrome.windows.create({
         url: chrome.runtime.getURL("index.html#/reply"),
         type: "popup",
-        width: 380,
+        width: 365,
         height: 512,
       });
     });
