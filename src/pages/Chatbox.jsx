@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import "./Chatbot.css";
 
 const Chatbot = () => {
   const [response, setResponse] = useState("");
@@ -18,22 +19,27 @@ const Chatbot = () => {
   }
 
   return (
-    <>
-      <div>Chatbot</div>
-      <div style={{ marginTop: 10 }}>
+    <div className="chat-segment">
+      <div className="chatbotHead">Ask Mimo</div>
+      <div className="ques-segment">
+        <img className="img-mimo" src="/images/mimo.png" alt="Mimo Avatar" />
+        <p className="mimo">How can I help you today?</p>
+      </div>
+      <div className="userInput">
         <input
           type="text"
-          placeholder="Enter your prompt"
+          placeholder="Ask your questions!"
           onChange={(e) => setInputValue(e.target.value)}
-        ></input>
-        <button style={{ marginLeft: 10 }} onClick={getResponse}>
-          Submit
-        </button>
+          value={inputValue}
+        />
       </div>
-      <div>
+      <button className="submitButton" onClick={getResponse}>
+        Submit
+      </button>
+      <div className="Output">
         <ReactMarkdown>{response}</ReactMarkdown>
       </div>
-    </>
+    </div>
   );
 };
 
