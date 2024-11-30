@@ -1,0 +1,92 @@
+
+.home-container {
+    display: flex;
+    justify-content: center;
+    width:100%;
+    align-items: center;
+    background-color: #292929; 
+    animation: fadeIn 1s ease-in-out; 
+    padding: 0 20px;
+  }
+  
+  .welcome-box {
+    text-align: center;
+    background-color: #202020;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.5s ease-in-out, box-shadow 0.3s ease; 
+  }
+  
+  .welcome-box:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+  }
+  
+  
+  .mimo-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .mimo-image:hover {
+    transform: rotate(360deg);
+  }
+  
+ 
+  .welcome-text {
+    font-size: 32px;
+    color: #ffcc00;
+    font-weight: 700;
+    margin-bottom: 10px;
+    animation: fadeInFromBottom 1s ease-in-out;
+  }
+  
+  .description {
+    font-size: 18px;
+    color: #f1f1f1;
+    font-weight: 400;
+    margin-top: 10px;
+    animation: fadeInFromBottom 1.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Fade-in text from the bottom */
+  @keyframes fadeInFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .welcome-box {
+      padding: 20px;
+      width: 100%;
+      margin: 0;
+    }
+  
+    .welcome-text {
+      font-size: 24px;
+    }
+  
+    .description {
+      font-size: 16px;
+    }
+  }
+  

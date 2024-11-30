@@ -84,7 +84,7 @@ const Compose = () => {
               >
                 <option value="Professional">Professional</option>
                 <option value="Casual">Casual</option>
-                <option value="Normal">Normal</option>
+                <option value="Excited">Excited</option>
               </select>
             </div>
 

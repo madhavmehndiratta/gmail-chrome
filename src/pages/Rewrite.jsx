@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { z } from "zod";
-
+import "./Rewrite.css";
 import Loading from "../components/Loading";
 
 const Rewrite = () => {
@@ -16,6 +16,14 @@ const Rewrite = () => {
     .string()
     .min(3, "Input must be at least 3 characters long");
 
+  const inputRef = useRef(null);  
+
+
+  const handleGoBack = () => {
+    setIsGenerated(false);
+    setUserInput(""); 
+  };
+
   const generateContent = async () => {
     try {
       inputSchema.parse(userInput);
@@ -28,20 +36,22 @@ const Rewrite = () => {
     setIsLoading(true);
     let s = await ai.languageModel.create({
       systemPrompt:
-        "You are content paraphraser. You have to rewrite the content based on some parameters. Make sure the content look like human generated and not ai generated.",
+        "You are content paraphraser. You have to rewrite the content based on some parameters. Make sure the content looks like human-generated and not AI-generated.",
     });
 
     const output = await s.prompt(
-      `Rewrite the content based on the following parameters: content ${userInput}, tone ${toneInput} and length ${lengthInput}`,
+      `Rewrite the content based on the following parameters: content ${userInput}, tone ${toneInput} and length ${lengthInput}`
     );
     setResponse(output.trim());
     setIsLoading(false);
     setIsGenerated(true);
   };
 
-  const handleGoBack = () => {
-    setIsGenerated(false);
-  };
+  useEffect(() => {
+    if (!isGenerated) {
+      inputRef.current?.focus();
+    }
+  }, [isGenerated]);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(response);
@@ -50,23 +60,17 @@ const Rewrite = () => {
 
   return (
     <div>
-      {!isGenerated & !isLoading ? (
+      {!isGenerated && !isLoading ? (
         <div className="popup-container">
-          <h3 className="popup-title">Rewrite Content</h3>
+          <h3 className="popup-title rewriteTitle">Rewrite Content</h3>
           <div className="input-box">
             <label htmlFor="subject-input" className="input-label">
               Type your content here
             </label>
-            <input
+            <textarea
               id="subject-input"
-              className="input-field"
-              type="text"
-              style={{
-                width: "90%",
-                height: "200px",
-                fontSize: "14px",
-                marginBottom: "10px",
-              }}
+              className="userInput rewriteUserInput"
+              ref={inputRef} 
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
@@ -78,12 +82,12 @@ const Rewrite = () => {
             </label>
             <select
               id="tone-select"
-              className="input-field"
+              className="rewriteInput"
               onChange={(e) => setToneInput(e.target.value)}
             >
               <option value="Professional">Professional</option>
               <option value="Casual">Casual</option>
-              <option value="Normal">Normal</option>
+              <option value="Excited">Excited</option>
             </select>
           </div>
 
@@ -93,7 +97,7 @@ const Rewrite = () => {
             </label>
             <select
               id="length-select"
-              className="input-field"
+              className="rewriteInput"
               onChange={(e) => setLengthInput(e.target.value)}
             >
               <option value="One Liner">One Liner</option>
