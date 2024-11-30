@@ -8,6 +8,7 @@ import Rewrite from "./pages/Rewrite";
 import Home from "./pages/Home";
 import Reply from "./pages/Reply";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import Summarize from "./pages/Summarize";
 
 function Main() {
   const [currentTab, setCurrentTab] = useState("");
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Main />} />
         <Route path="/reply" element={<Reply />} />
+        <Route path="/summarize" element={<Summarize />} />
       </Routes>
     </HashRouter>
   );
