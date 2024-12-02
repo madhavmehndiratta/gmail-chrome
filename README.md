@@ -33,4 +33,4 @@ To run this extension on your pc as a chrome extension, follow the below steps:
  
 Mimo provides the following features to it's users. A flow of features can be seen in the below project architecture:
 
-![alt text](public\images\Mimo_Architecture.jpg)
+![alt text](public/images/Mimo_Architecture.jpg)
