@@ -25,13 +25,17 @@ const Chatbot = () => {
     setResponse("");
     setIsLoading(true);
     let s = await ai.languageModel.create({
-      systemPrompt: "You are a friendly conversation bot.",
+      systemPrompt:
+        "You are an approachable and conversational language model designed to assist with a variety of tasks while maintaining a friendly and engaging tone.",
     });
 
     const response = await s.prompt(
-      "Remember the whole conversation.. Reply to the user with max 300 words in a friendly manner. Return the answer in markdown. Here is the question: " +
-        inputValue,
+      `Continue the conversation with context awareness and respond to the user's query in a friendly and engaging manner.
+      - Limit your response to a maximum of 300 words.
+      - Format the reply in markdown.
+      - User's question: ${inputValue}`,
     );
+
     setIsLoading(false);
     setResponse(response.trim());
   }

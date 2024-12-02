@@ -29,12 +29,16 @@ const Compose = () => {
     setIsLoading(true);
     let s = await ai.languageModel.create({
       systemPrompt:
-        "You are an email composer. You can write the best emails given some parameters. Make sure the emails look like human generated and not ai generated.",
+        "You are an expert email composer with a talent for crafting professional, human-like emails tailored to the provided context and purpose. Given specific details and parameters, your emails should be polished, engaging, and aligned with the intended tone, ensuring they appear natural and thoughtfully written.",
     });
 
     const output = await s.prompt(
-      `Generate an email based on the following parameters: subject ${subjectInput}, tone ${toneInput} and length ${lengthInput}`,
+      `Write a professional email based on the following parameters:
+      - Subject: ${subjectInput}
+      - Tone: ${toneInput}
+      - Length: ${lengthInput}`,
     );
+
     setResponse(output.trim());
     setIsLoading(false);
     setIsGenerated(true);

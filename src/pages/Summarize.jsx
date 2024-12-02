@@ -79,7 +79,7 @@ const Summarize = () => {
 
           <div className="input-box">
             <label htmlFor="type-select" className="input-label">
-              Length
+              Type
             </label>
             <select
               id="type-select"

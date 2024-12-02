@@ -73,6 +73,7 @@ const Reply = () => {
               <option value="Professional">Professional</option>
               <option value="Casual">Casual</option>
               <option value="Excited">Excited</option>
+              <option value="Negative">Negative</option>
             </select>
           </div>
 

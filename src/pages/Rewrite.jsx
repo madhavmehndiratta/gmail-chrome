@@ -38,12 +38,16 @@ const Rewrite = () => {
     setIsLoading(true);
     let s = await ai.languageModel.create({
       systemPrompt:
-        "You are content paraphraser. You have to rewrite the content based on some parameters. Make sure the content looks like human-generated and not AI-generated.",
+        "You are a skilled content paraphraser. Your role is to rewrite content based on specified parameters while ensuring the output feels natural, authentic, and human-generated.",
     });
 
     const output = await s.prompt(
-      `Rewrite the content based on the following parameters: content ${userInput}, tone ${toneInput} and length ${lengthInput}`,
+      `Paraphrase the content based on the following parameters:
+      - Content: ${userInput}
+      - Tone: ${toneInput}
+      - Length: ${lengthInput}`,
     );
+
     setResponse(output.trim());
     setIsLoading(false);
     setIsGenerated(true);
