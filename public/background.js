@@ -5,7 +5,13 @@ chrome.runtime.onInstalled.addListener(() => {
     id: "autoGenerateReply",
     title: "Auto-generate reply",
     contexts: ["selection"],
-    // documentUrlPatterns: ["https://mail.google.com/*"],
+    documentUrlPatterns: ["https://mail.google.com/*"],
+  });
+
+  chrome.contextMenus.create({
+    id: "summarizeContent",
+    title: "Summarize Content",
+    contexts: ["selection"],
   });
 });
 
@@ -19,20 +25,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         height: 512,
       });
     });
-  }
-});
-
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: "summarizeContent",
-    title: "Summarize Content",
-    contexts: ["selection"],
-    // documentUrlPatterns: ["https://mail.google.com/*"],
-  });
-});
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "summarizeContent") {
+  } else if (info.menuItemId === "summarizeContent") {
     chrome.storage.local.set({ selectedText: info.selectionText }, () => {
       chrome.windows.create({
         url: chrome.runtime.getURL("index.html#/summarize"),
