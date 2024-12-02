@@ -12,16 +12,18 @@ const Rewrite = () => {
   const [isGenerated, setIsGenerated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [copiedText, setCopiedText] = useState(false);
   const inputSchema = z
     .string()
     .min(3, "Input must be at least 3 characters long");
 
-  const inputRef = useRef(null);  
-
+  const inputRef = useRef(null);
 
   const handleGoBack = () => {
+    setToneInput("Professional");
+    setLengthInput("One Liner");
     setIsGenerated(false);
-    setUserInput(""); 
+    setUserInput("");
   };
 
   const generateContent = async () => {
@@ -40,7 +42,7 @@ const Rewrite = () => {
     });
 
     const output = await s.prompt(
-      `Rewrite the content based on the following parameters: content ${userInput}, tone ${toneInput} and length ${lengthInput}`
+      `Rewrite the content based on the following parameters: content ${userInput}, tone ${toneInput} and length ${lengthInput}`,
     );
     setResponse(output.trim());
     setIsLoading(false);
@@ -55,7 +57,7 @@ const Rewrite = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(response);
-    alert("Content copied to clipboard!");
+    setCopiedText(true);
   };
 
   return (
@@ -70,7 +72,7 @@ const Rewrite = () => {
             <textarea
               id="subject-input"
               className="userInput rewriteUserInput"
-              ref={inputRef} 
+              ref={inputRef}
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
@@ -123,7 +125,7 @@ const Rewrite = () => {
             </div>
             <div className="response-actions">
               <button className="copy-button" onClick={copyToClipboard}>
-                Copy Response
+                {copiedText ? "Copied!" : "Copy Response"}
               </button>
             </div>
             <button className="go-back-button" onClick={handleGoBack}>

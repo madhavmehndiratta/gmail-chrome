@@ -7,7 +7,8 @@ const Home = () => {
         <img src="/images/mimo.png" alt="Mimo" className="mimo-image" />
         <h1 className="welcome-text">Welcome to Mimo! ✨</h1>
         <p className="description">
-          Your personal assistant for Gmail: Summarize, rewrite, chat, auto-reply, and more.
+          Your personal assistant for Gmail: summarize, rewrite, chat,
+          auto-reply, and more!
         </p>
       </div>
     </div>

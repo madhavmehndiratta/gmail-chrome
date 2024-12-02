@@ -11,6 +11,7 @@ const Reply = () => {
   const [lengthInput, setLengthInput] = useState("One Liner");
   const [isGenerated, setIsGenerated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
 
   useEffect(() => {
     chrome.storage.local.get("selectedText", (result) => {
@@ -34,12 +35,14 @@ const Reply = () => {
   };
 
   const handleGoBack = () => {
+    setToneInput("Professional");
+    setLengthInput("One Liner");
     setIsGenerated(false);
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(response);
-    alert("Email copied to clipboard!");
+    navigator.clipboard.writeText(replyContent);
+    setCopiedText(true);
   };
 
   return (
@@ -69,7 +72,7 @@ const Reply = () => {
             >
               <option value="Professional">Professional</option>
               <option value="Casual">Casual</option>
-              <option value="Normal">Normal</option>
+              <option value="Excited">Excited</option>
             </select>
           </div>
 
@@ -105,7 +108,7 @@ const Reply = () => {
             </div>
             <div className="response-actions">
               <button className="copy-button" onClick={copyToClipboard}>
-                Copy Email
+                {copiedText ? "Copied!" : "Copy Reply"}
               </button>
             </div>
             <button className="go-back-button" onClick={handleGoBack}>

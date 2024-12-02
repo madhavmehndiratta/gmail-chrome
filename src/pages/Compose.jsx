@@ -12,6 +12,7 @@ const Compose = () => {
   const [isGenerated, setIsGenerated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [copiedText, setCopiedText] = useState(false);
   const inputSchema = z
     .string()
     .min(3, "Input must be at least 3 characters long");
@@ -40,12 +41,14 @@ const Compose = () => {
   };
 
   const handleGoBack = () => {
+    setToneInput("Professional");
+    setLengthInput("One Liner");
     setIsGenerated(false);
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(response);
-    alert("Email copied to clipboard!");
+    setCopiedText(true);
   };
 
   return (
@@ -121,7 +124,7 @@ const Compose = () => {
               </div>
               <div className="response-actions">
                 <button className="copy-button" onClick={copyToClipboard}>
-                  Copy Email
+                  {copiedText ? "Copied!" : "Copy Email"}
                 </button>
               </div>
               <button className="go-back-button" onClick={handleGoBack}>

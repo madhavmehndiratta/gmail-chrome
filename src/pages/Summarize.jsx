@@ -5,10 +5,12 @@ import Loading from "../components/Loading";
 
 const Summarize = () => {
   const [selectedText, setSelectedText] = useState("");
-  const [replyContent, setReplyContent] = useState("");
-  const [lengthInput, setLengthInput] = useState("Short");
+  const [summaryContent, setSummaryContent] = useState("");
+  const [typeInput, setTypeInput] = useState("key-points");
+  const [lengthInput, setLengthInput] = useState("short");
   const [isGenerated, setIsGenerated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
 
   useEffect(() => {
     chrome.storage.local.get("selectedText", (result) => {
@@ -16,28 +18,46 @@ const Summarize = () => {
     });
   }, []);
 
-  const generateReply = async () => {
+  const generateSummary = async () => {
     setIsLoading(true);
-    let s = await ai.languageModel.create({
-      systemPrompt:
-        "You are a content summarizer. You have to summarize on some parameters. Make sure the summary look like human generated and not ai generated and is easy to understand.",
-    });
+    const options = {
+      sharedContext: "",
+      type: typeInput,
+      format: "plain-text",
+      length: lengthInput,
+    };
 
-    const output = await s.prompt(
-      `Generate a summary using the following parameters: content ${selectedText}, and length ${lengthInput}`,
-    );
-    setReplyContent(output.trim());
-    setIsLoading(false);
-    setIsGenerated(true);
+    console.log(options);
+
+    try {
+      const summarizer = await ai.summarizer.create(options);
+
+      const summary = await summarizer.summarize(selectedText);
+
+      setSummaryContent(summary.trim());
+      setIsGenerated(true);
+    } catch (error) {
+      console.error("Error generating summary:", error);
+      setIsGenerated(true);
+      setSummaryContent(
+        "An error occurred while generating the summary. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoBack = () => {
+    setCopiedText(false);
+    setSummaryContent("");
+    setTypeInput("key-points");
+    setLengthInput("short");
     setIsGenerated(false);
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(response);
-    alert("Summary copied to clipboard!");
+    navigator.clipboard.writeText(summaryContent);
+    setCopiedText(true);
   };
 
   return (
@@ -58,6 +78,22 @@ const Summarize = () => {
           />
 
           <div className="input-box">
+            <label htmlFor="type-select" className="input-label">
+              Length
+            </label>
+            <select
+              id="type-select"
+              className="input-field"
+              onChange={(e) => setTypeInput(e.target.value)}
+            >
+              <option value="key-points">Key Points</option>
+              <option value="tl;dr">TL;DR</option>
+              <option value="teaser">Teaser</option>
+              <option value="headline">Headline</option>
+            </select>
+          </div>
+
+          <div className="input-box">
             <label htmlFor="length-select" className="input-label">
               Length
             </label>
@@ -66,12 +102,13 @@ const Summarize = () => {
               className="input-field"
               onChange={(e) => setLengthInput(e.target.value)}
             >
-              <option value="Short">Short</option>
-              <option value="Medium">Medium</option>
-              <option value="Long">Long</option>
+              <option value="short">Short</option>
+              <option value="medium">Medium</option>
+              <option value="long">Long</option>
             </select>
           </div>
-          <button className="submit-button" onClick={generateReply}>
+
+          <button className="submit-button" onClick={generateSummary}>
             Summarize Content
           </button>
         </div>
@@ -84,11 +121,11 @@ const Summarize = () => {
           <div className="response-box">
             <h3>Your Summmary:</h3>
             <div className="response-content">
-              <ReactMarkdown>{replyContent}</ReactMarkdown>
+              <ReactMarkdown>{summaryContent}</ReactMarkdown>
             </div>
             <div className="response-actions">
               <button className="copy-button" onClick={copyToClipboard}>
-                Copy Summary
+                {copiedText ? "Copied!" : "Copy Summary"}
               </button>
             </div>
             <button className="go-back-button" onClick={handleGoBack}>
