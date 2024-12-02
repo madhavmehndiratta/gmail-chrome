@@ -1,4 +1,4 @@
-# Google Built-In AI Challenge 
+# Google Chrome Built-In AI Challenge 
 
 ## Mimo 
 Meet Mimo, your easy to use chrome extension designed to help you navigate your gmail! Mimo is your personal assistant that can be used to generate emails, summarize text, automatically reply to mails and much more!
